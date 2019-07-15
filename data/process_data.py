@@ -36,12 +36,12 @@ def clean_data(df):
     for vals in category_vals:
         vals = re.sub("[a-zA-Z-_]", "", vals)
         new_vals.append(vals)
-    # Create new dataframe with category values
+    # Create new dataframe with category values.
     new_vals = pd.Series(new_vals)
     new_vals = new_vals.str.split(';', expand=True)
-    # Extract all category column names. Clean strings by removing values
+    # Extract all category column names. Clean strings by removing values.
     category_col = df.categories[0].replace('-1', '').replace('-0', '').split(';')
-    # Rename the category column names to match that of original category column values
+    # Rename the category column names to match that of original category column values.
     new_vals.columns = category_col
     # replace non binary data into binary
     new_vals.related.replace('2', '1', inplace=True)

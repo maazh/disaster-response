@@ -31,16 +31,16 @@ def load_data(database_filepath):
     # load data from database
     engine = create_engine('sqlite:///{}'.format(database_filepath))
     df = pd.read_sql_table("disaster_relief", engine)
-    category_names = df.columns.tolist()
     # select only messages received directly for greater accuracy
     df = df[df['genre'] == 'direct']
     X = df.message.values
     y = df.drop(columns=['id', 'message', 'original', 'genre'])
+    category_names = y.columns.tolist()
     return X, y, category_names
 
 
 def tokenize(text):
-    """Clean and tokenize data recieved.
+    """Clean and tokenize data received.
 
     Args:
     text: str. Corpus of raw data.
@@ -82,13 +82,13 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    """Clean and tokenize data received.
+    """Find model accuracy, fscore, precision,
 
     Args:
-    text: str. Corpus of raw data.
-
-    Returns:s
-    clean_tokens: list of tokens
+    model: str. Corpus of raw data.
+    X_test: Test data.
+    Y_test: Predicitor data.
+    category_names: List of category names
     """
     y_pred = model.predict(X_test)
 
@@ -123,13 +123,15 @@ def main():
         print('Training model...')
         model.fit(X_train, Y_train)
 
-        print('Evaluating model...')
-        evaluate_model(model, X_test, Y_test, category_names)
-
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         save_model(model, model_filepath)
-
         print('Trained model saved!')
+
+        print('Evaluating model...')
+        evaluate_model(model, X_test, Y_test, category_names)
+        print('Model Evaluated!')
+
+
 
     else:
         print('Please provide the filepath of the disaster messages database '

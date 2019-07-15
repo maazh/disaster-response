@@ -25,15 +25,14 @@ def load_data(database_filepath):
     Returns:
     X: feature data values
     y: class variables
-    category_names: list of feature coloumns
+    category_names: list of feature columns
     """
 
     # load data from database
     engine = create_engine('sqlite:///{}'.format(database_filepath))
-    table_name = 'disaster_relief'
-    df = pd.read_sql_table(table_name, engine)
+    df = pd.read_sql_table("disaster_relief", engine)
     category_names = df.columns.tolist()
-    # select only messeges recieved directly for greater accuracy
+    # select only messages received directly for greater accuracy
     df = df[df['genre'] == 'direct']
     X = df.message.values
     y = df.drop(columns=['id', 'message', 'original', 'genre'])
@@ -83,7 +82,7 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
-    """Clean and tokenize data recieved.
+    """Clean and tokenize data received.
 
     Args:
     text: str. Corpus of raw data.
@@ -102,6 +101,12 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """Save model.
+
+    Args:
+    model: Model Object.
+    model_filepath: str. Path to be saved on.
+    """
     pickle.dump(model, open(model_filepath, 'wb'))
 
 

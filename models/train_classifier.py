@@ -31,16 +31,16 @@ def load_data(database_filepath):
     # load data from database
     engine = create_engine('sqlite:///{}'.format(database_filepath))
     df = pd.read_sql_table("disaster_relief", engine)
+    category_names = df.columns.tolist()
     # select only messages received directly for greater accuracy
-    df = df[df['genre'] == 'direct']
+    # df = df[df['genre'] == 'direct']
     X = df.message.values
     y = df.drop(columns=['id', 'message', 'original', 'genre'])
-    category_names = y.columns.tolist()
     return X, y, category_names
 
 
 def tokenize(text):
-    """Clean and tokenize data received.
+    """Clean and tokenize data recieved.
 
     Args:
     text: str. Corpus of raw data.

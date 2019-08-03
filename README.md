@@ -1,6 +1,7 @@
 # Disaster Response Pipeline Project
 
-##### A Machine Learning Message classifier trained on messages received during disasters to classify them according to their respective category(e.g. health, medicine, relief, etc.) 
+### A Machine Learning Message classifier trained on messages received during disasters to classify them according to their respective category(e.g. health, medicine, relief, etc.) 
+
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 
